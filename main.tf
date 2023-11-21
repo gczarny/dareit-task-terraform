@@ -22,3 +22,23 @@ resource "google_compute_instance" "dareit-vm-ci" {
     }
   }
 }
+
+resource "google_storage_bucket" "dareit-vm-ci-task-bucket" {
+  name     = "dareit-vm-ci-task-bucket"
+  location = "EU"
+  labels = {
+    managed_by_terraform = "true"
+  }
+
+  website {
+    main_page_suffix = "index.html"
+    not_found_page   = "404.html"
+  }
+
+  cors {
+    origin          = ["*"]
+    method          = ["GET"]
+    response_header = ["Content-Type"]
+    max_age_seconds = 3600
+  }
+}
